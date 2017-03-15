@@ -29,11 +29,10 @@ Example:
     Polymer({
         is:"xenon-html-input",
         behaviors: [
-            Polymer.PaperInputBehavior,
-            Polymer.IronFormElementBehavior
+            Polymer.PaperInputBehavior
         ],
-        get _focusableElement() {
-            return this.$.input;
+        ready: function () {
+            this.tabIndex = -1;
         }
     });
     </script>
