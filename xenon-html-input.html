@@ -1,0 +1,40 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html"/>
+<link rel="import" href="../paper-input/paper-input-container.html"/>
+<link rel="import" href="xenon-content-editable.html"/>
+<!--
+`<xenon-html-input>` is a paper-input styled input component that allows a user to enter rich text. The resulting value will include html.
+
+Example:
+
+           `<xenon-html-input label="Comment" value="{{value}}">
+            </xenon-html-input>`
+
+@group Xenon Elements
+@element xenon-html-input
+@demo demo/index.html
+-->
+<dom-module id="xenon-html-input">
+    <template>
+        <paper-input-container attr-for-value="value">
+            <label hidden$="[[!label]]" aria-hidden="true">[[label]]</label>
+            <xenon-content-editable id="input" value="{{value}}" class="paper-input-input"></xenon-content-editable>
+        </paper-input-container>
+        <template is="dom-if" if="[[errorMessage]]">
+            <paper-input-error>[[errorMessage]]</paper-input-error>
+        </template>
+    </template>
+    <script>
+    Polymer({
+        is:"xenon-html-input",
+        behaviors: [
+            Polymer.PaperInputBehavior,
+            Polymer.IronFormElementBehavior
+        ],
+        get _focusableElement() {
+            return this.$.input;
+        }
+    });
+    </script>
+</dom-module>

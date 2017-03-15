@@ -1,0 +1,35 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<dom-module id="xenon-content-editable">
+    <template>
+        <style>
+            div { min-height: 1.2em; }
+        </style>
+        <div id="input" contenteditable="true"></div>
+    </template>
+    <script>
+    Polymer({
+        is:"xenon-content-editable", 
+        properties: {
+            // value (may include html tags)
+            value: { type:String, notify:true, observer:"_valueChange" }
+        }, 
+        // watch the innerHTML of this element and make it my value
+        ready: function() {
+            var self = this; 
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    self.value = self.$.input.innerHTML;
+                    console.log(self.$.input.innerHTML);
+                });
+            });
+            var config = { attributes: true, childList: true, characterData: true, subtree:true };
+            observer.observe(this.$.input, config);
+        }, 
+        // if a change comes from outside this element, overwrite innerHTML
+        _valueChange: function(value) {
+            if(this.$.input.innerHTML == this.value) return;
+            this.$.input.innerHTML = value; 
+        }
+    });
+    </script>
+</dom-module>

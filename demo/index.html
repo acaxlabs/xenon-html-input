@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../xenon-html-input.html"/>
+        <link rel="import" href="../xenon-content-editable.html"/>
+    </head>
+    <body>
+        <dom-module id="demo-element">
+            <template>
+                <div>Below is a rich text input. Use ctrl-B to make text bold and ctrl-I to make text italic.</div>
+                <xenon-html-input label="Comment" value="{{value}}"></xenon-html-input>
+                <div>Output:</div>
+                <div inner-h-t-m-l="{{value}}"></div>
+            </template>
+            <script>
+                window.addEventListener('WebComponentsReady', function() {
+                    Polymer({
+                        is: "demo-element"
+                    });
+                 });
+            </script>
+        </dom-module>
+        <demo-element></demo-element>
+    </body>
+</html>
