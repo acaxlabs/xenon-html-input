@@ -32,6 +32,8 @@ Example:
             Polymer.PaperInputBehavior
         ],
         ready: function () {
+            // make sure this component isn't a tab stop on it's own. the xenon-content-editable inside 
+            // here will be a tab stop.
             this.tabIndex = -1;
         }
     });
