@@ -4,7 +4,7 @@
         <style>
             #input { min-height: 1.2em; outline: none; }
         </style>
-        <div id="input" contenteditable="true"></div>
+        <div id="input" contenteditable="true" tabindex="0" on-keyup="_keyup"></div>
     </template>
     <script>
     Polymer({
@@ -12,23 +12,16 @@
         properties: {
             // value (may include html tags)
             value: { type:String, notify:true, observer:"_valueChange" }
-        }, 
-        // watch the innerHTML of this element and make it my value
-        ready: function() {
-            var self = this; 
-            var observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    self.value = self.$.input.innerHTML;
-                    console.log(self.$.input.innerHTML);
-                });
-            });
-            var config = { attributes: true, childList: true, characterData: true, subtree:true };
-            observer.observe(this.$.input, config);
-        }, 
+        },
         // if a change comes from outside this element, overwrite innerHTML
         _valueChange: function(value) {
-            if(this.$.input.innerHTML == this.value) return;
+            if(this.$.input.innerHTML == this.value) return; // prevent infinte loop
             this.$.input.innerHTML = value; 
+        },
+        // if a change comes from inside this element, write it to the external property
+        _keyup: function (e) {
+            if (this.$.input.innerHTML == this.value) return; // prevent infinte loop
+            this.value = this.$.input.innerHTML;
         }
     });
     </script>
